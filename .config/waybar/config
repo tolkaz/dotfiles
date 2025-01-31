@@ -1,0 +1,105 @@
+{
+  "output": "DP-1",
+  "layer": "top",
+  "margin-top": 3,
+  "margin-bottom": 0,
+  "margin-left": 3,
+  "margin-right": 3,  
+  "modules-left": [
+    "custom/appmenu",
+    "hyprland/workspaces"
+  ],
+  "modules-center": [
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "pulseaudio",
+    "bluetooth",
+    "network",
+    "tray",
+    "custom/exit",
+    "clock"
+  ],
+  "tray": {
+    "icon-size": 23,
+    "spacing": 10
+  },
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "active-only": false,
+    "all-outputs": true,
+    "format": "{}",
+    "format-icons": {
+      "urgent": "",
+      "active": "",
+      "default": ""
+    },
+    "persistent-workspaces": {
+      "*": [ 1, 2, 3, 4, 5, 6, 7 ,8 ]
+    }
+  },
+    "custom/appmenu": {
+    "format": "Apps",
+    "on-click": "sleep 0.2;pkill rofi || rofi -show drun",
+    "tooltip-format": "Left: Open the application launcher"
+  },
+  "network": {
+    "format": "{ifname}",
+    "format-wifi": " {essid} ({signalStrength}%)",
+    "format-ethernet": "  {ifname}",
+    "format-disconnected": "Disconnected ⚠",
+    "tooltip-format": " {ifname} via {gwaddri}",
+    "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
+    "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50,
+    "on-click-right": "~/.config/waybar/scripts/nm-applet.sh toggle",
+    "on-click": "hyprctl dispatch exec [float] 'alacritty -e nmtui'"
+  },
+  "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": " ",
+      "hands-free": " ",
+      "headset": " ",
+      "phone": " ",
+      "portable": " ",
+      "car": " ",
+      "default": ["", "", ""]
+    },
+    
+    "on-click": "pavucontrol"
+  },
+    "bluetooth": {
+    "format": " {status}",
+    "format-disabled": "",
+    "format-off": "",
+    "interval": 30,
+    "on-click": "blueman-manager",
+    "format-no-controller": ""
+  },
+  "custom/exit": {
+    "format": "",
+    "on-click": "wlogout",
+    "tooltip-format": "Power menu"
+  },
+  "clock": {
+            "format": "{:%I:%M %p %a %d} ",
+            "interval": 1,   
+            "tooltip-format": "<tt>{calendar}</tt>",
+            "calendar": {
+                "format": {
+                    "today": "<span color='#fAfBfC'><b>{}</b></span>"
+                }
+            },
+            "actions": {
+                "on-click-right": "shift_down",
+                "on-click": "shift_up"
+            }
+        }
+}
