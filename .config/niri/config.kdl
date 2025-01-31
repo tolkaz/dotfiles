@@ -1,6 +1,11 @@
 // This config is in the KDL format: https://kdl.dev
 // "/-" comments out the following node.
-
+// Check the wiki for a full description of the configuration:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Overview
+// fdsf 
+// Input device configuration.
+// Find the full list of options on the wiki:
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 input {
     keyboard {
         xkb {
@@ -8,24 +13,14 @@ input {
             // For more information, see xkeyboard-config(7).
 
             // For example:
-            //layout "us"
+            layout "us"
             // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
         }
-
-        // You can set the keyboard repeat parameters. The defaults match wlroots and sway.
-        // Delay is in milliseconds before the repeat starts. Rate is in characters per second.
-        // repeat-delay 600
-        // repeat-rate 25
-
-        // Niri can remember the keyboard layout globally (the default) or per-window.
-        // - "global" - layout change is global for all windows.
-        // - "window" - layout is tracked for each window individually.
-        // track-layout "global"
     }
 
-    // Next sections include libinput settings.
+     // Next sections include libinput settings.
     // Omitting settings disables them, or leaves them at their default values.
-    touchpad {
+    /-touchpad {
         tap
         // dwt
         //natural-scroll
@@ -40,18 +35,18 @@ input {
         accel-profile "flat"
     }
 
-    tablet {
+    /-tablet {
         // Set the name of the output (see below) which the tablet will map to.
         // If this is unset or the output doesn't exist, the tablet maps to one of the
         // existing outputs.
         //map-to-output "eDP-1"
     }
 
-    // By default, niri will take over the power button to make it sleep
-    // instead of power off.
-    // Uncomment this if you would like to configure the power button elsewhere
-    // (i.e. logind.conf).
-    // disable-power-key-handling
+
+    // Uncomment this to make the mouse warp to the center of newly focused windows.
+     warp-mouse-to-focus
+     focus-follows-mouse
+    // Focus windows and outputs automatically when moving the mouse into them.
 }
 
 // You can configure outputs by their name, which you can find
@@ -60,6 +55,7 @@ input {
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
+
 output "DP-1" {
     mode "3440x1440@143.923"
     scale 1
@@ -83,15 +79,12 @@ output "HDMI-A-1" {
     position x=0 y=218
 }
 
-
-
-
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 10
+    gaps 7
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -109,13 +102,11 @@ layout {
         proportion 0.33333
         proportion 0.5
         proportion 0.66667
+        
 
         // Fixed sets the width in logical pixels exactly.
         // fixed 1920
     }
-
-    // You can also customize the heights that "switch-preset-window-height" (Mod+Shift+R) toggles between.
-    // preset-window-heights { }
 
     // You can change the default width of the new windows.
     default-column-width { proportion 0.5; }
@@ -135,37 +126,28 @@ layout {
 
     // You can change how the focus ring looks.
     focus-ring {
-
-        // How many logical pixels the ring extends out from the windows.
-        width 4
-
-        // Colors can be set in a variety of ways:
-        // - CSS named colors: "red"
-        // - RGB hex: "#rgb", "#rgba", "#rrggbb", "#rrggbbaa"
-        // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
-
-        // Color of the ring on the active monitor.
-        active-color "#f7720c"
-
-        // Color of the ring on inactive monitors.
-        inactive-color "#7d35ce"
-
-        // You can also use gradients. They take precedence over solid colors.
-        // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
-        // The angle is the same as in linear-gradient, and is optional,
-        // defaulting to 180 (top-to-bottom gradient).
-        // You can use any CSS linear-gradient tool on the web to set these up.
-        // Changing the color space is also supported, check the wiki for more info.
-        //
-        //active-gradient from="#80c8ff" to="#bbddff" angle=45
-
-        // You can also color the gradient relative to the entire view
-        // of the workspace, rather than relative to just the window itself.
-        // To do that, set relative-to="workspace-view".
-        //
-        //inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+        off
+        width 5
+        //active-color "#7fc8ff"
+        //inactive-color "#505050"
+        active-gradient from="#8e20fc" to="#fc9425" angle=45 relative-to="workspace-view"
+        inactive-gradient from="#505050" to="#505050" angle=15 relative-to="workspace-view"
     }
 
+
+    // You can also add a border. It's similar to the focus ring, but always visible.
+      border {
+        // The settings are the same as for the focus ring.
+        // If you enable the border, you probably want to disable the focus ring.
+        //off
+        
+        width 5
+        //active-color "blue"
+        //inactive-color "#505050"
+
+        active-gradient from="#8e20fc" to="#fc9425" angle=45 in="oklch increasing hue"
+        //inactive-gradient from="#505050" to="#505050" angle=15 in="oklch increasing hue"
+    }
 
 
     // Struts shrink the area occupied by windows, similarly to layer-shell panels.
@@ -174,25 +156,28 @@ layout {
     // Top and bottom struts will simply add outer gaps in addition to the area occupied by
     // layer-shell panels and regular gaps.
     struts {
-        // left 64
-        // right 64
-        // top 64
-        // bottom 64
+         //left 30
+        
+        // right 0
+        // top 0
+        // bottom 0
     }
 }
 
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
-// See the binds section below for more spawn examples.
 // spawn-at-startup "alacritty" "-e" "fish"
-
-spawn-at-startup "waybar"
-spawn-at-startup "mako"
+//spawn-at-startup "waybar"
+//spawn-at-startup "mako"
 spawn-at-startup "nm-applet"
 spawn-at-startup "xwayland-satellite" "-hidpi"
 spawn-at-startup "polkit-gnome-authentication-agent-1"
+// Uncomment this line to ask the clients to omit their client-side decorations if possible.
+// If the client will specifically ask for CSD, the request will be honored.
+// Additionally, clients will be informed that they are tiled, removing some rounded corner
 
+prefer-no-csd
 
 environment {
     DISPLAY ":1";
@@ -201,9 +186,14 @@ environment {
     SDL_VIDEODRIVER "x11";
     GTK_IM_MODULE "fcitx";
     QT_IM_MODULE "fcitx";
-
+    XDG_CURRENT_DESKTOP "Niri";
+    XDG_SESSION_TYPE "wayland";
+    XDG_SESSION_DESKTOP "Niri";
 }
 
+// You can change the path where screenshots are saved.
+// A ~ at the front will be expanded to the home directory.
+// The path is formatted with strftime(3) to give you the screenshot date and time.
 screenshot-path "/media/hisui/Images/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 // You can also set this to null to disable saving screenshots to disk.
@@ -215,9 +205,50 @@ screenshot-path "/media/hisui/Images/Screenshots/Screenshot from %Y-%m-%d %H-%M-
 animations {
     // Uncomment to turn off all animations.
     // off
-
     // Slow down all animations by this factor. Values below 1 speed them up instead.
-    // slowdown 3.0
+   slowdown 0.9
+	workspace-switch {
+    spring damping-ratio=1.0 stiffness=2000 epsilon=0.0001
+  }
+  horizontal-view-movement {
+    spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+  }
+  window-movement {
+    spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+  }
+  window-open {
+    spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    custom-shader r"
+    float map(float value, float min1, float max1, float min2, float max2) {
+    return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+    }
+    vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+    float cur = niri_clamped_progress;
+    if (coords_geo.x > cur) {
+    return vec4(0.0);
+    }
+    vec3 coord = vec3(map(coords_geo.x,0.0, cur, 0.0, 1.0 ), coords_geo.y, coords_geo.z);
+    return texture2D(niri_tex, (niri_geo_to_tex * coord).st);
+    }
+    "
+  }
+  window-close {
+    spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    custom-shader r"
+    float map(float value, float min1, float max1, float min2, float max2) {
+    return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+    }
+    vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+    float cur = 1.0-niri_clamped_progress;
+    if (coords_geo.x > cur) {
+    return vec4(0.0);
+    }
+    vec3 coord = vec3(map(coords_geo.x,0.0, cur, 0.0, 1.0), coords_geo.y, coords_geo.z);
+    return texture2D(niri_tex, (niri_geo_to_tex * coord).st);
+    }
+    "
+  } 
+    
 }
 
 // Window rules let you adjust behavior for individual windows.
@@ -226,40 +257,38 @@ animations {
 
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
+
 window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
+  draw-border-with-background false
+  clip-to-geometry true
+  geometry-corner-radius 5
 }
 
-// Open the Firefox picture-in-picture player as floating by default.
 window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id="firefox$" title="^Picture-in-Picture$"
+
     open-floating true
+    default-floating-position x=32 y=32 relative-to="bottom-left"
 }
 
-// Example: block out two password managers from screen capture.
-// (This example rule is commented out with a "/-" in front.)
-/-window-rule {
-    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
-    match app-id=r#"^org\.gnome\.World\.Secrets$"#
-
-    block-out-from "screen-capture"
-
-    // Use this instead if you want them visible on third-party screenshot tools.
-    // block-out-from "screencast"
-}
-
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
 window-rule {
-    geometry-corner-radius 16
-    clip-to-geometry true
+    open-floating true
+    match app-id="polkit-gnome-authentication-agent-1" 
+    match app-id="org.pulseaudio.pavucontrol"
+    match app-id="foot" title="nmtui"
+    match app-id="waypaper"
+}
+
+window-rule {
+    match app-id="discord"
+    match app-id="LibreWolf"
+    block-out-from "screencast"
+}
+
+layer-rule {
+    match namespace="^notifications$"
+    match namespace="^bitwarden$"
+    block-out-from "screencast"
 }
 
 binds {
@@ -284,7 +313,9 @@ binds {
     Mod+B { spawn "librewolf"; }
     Mod+E { spawn "thunar"; }
     Mod+Z { spawn "discord"; }
-    Super+Alt+L { spawn "swaylock"; }
+    Mod+Shift+W { spawn "waypaper" "--random"; }
+    Mod+Alt+L { spawn "swaylock" "-f"; }
+    
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
