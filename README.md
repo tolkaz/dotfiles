@@ -1,30 +1,22 @@
 # redgarden-hyprland
 Current AUR Dependencies:\
-grimblast-git
 python-pywal16\
-waypaper-git can be switch for stable probably
+waypaper\
+swaylock-effects-git\
 wlogout\
-xwaylandvideobridge-git can be switched for xwaylandvideobridge from stable instead of aur
+colloid-gtk-theme-git\
+yazi-git\
+
 
 Arch Repo:\
-hyprcursor
-hypridle
-hyprland
-hyprlock
-hyprpaper
-hyprpicker
-hyprutils
-xdg-desktop-portal-hyprland
-xdg-desktop-portal-gtk
-polkit-gnome-authentication-agent-1
-thunar
-dunst
-rofi-wayland edition
-waybar
-blueman
-pavucontrol
-mission-center
-NetworkManager\
+swayidle\
+swww\
+gnome-keyring\
+xdg-desktop-portal-gnome\
+xdg-desktop-portal-gtk\
+xwayland-satellite\
+thunar\
+
 pipewire or pipewire-pulse for pavucontrol
 
 not entirely necessary but msot of the configs are using one of these because I am a fool? Not sure how fonts are done on hyprland as I was using KDE previously before reinstall, will update if i fix it to just use system fonts istead of having to specify in each config file
@@ -39,13 +31,5 @@ noto-fonts
 
 
 u gonna have to edit some fo teh configs if u use this shit
-
-todo
-
-get x11 cursor that matches hyprland\
-get hyprcursor to set on launch via env varaible like x11\
-fuck discord\
-get nwg-look on reinstall to see what thef uck we have and how to customize it also bibata-cursor-theme good
-
 
 
