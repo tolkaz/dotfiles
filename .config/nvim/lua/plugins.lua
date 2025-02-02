@@ -38,6 +38,8 @@ return {
                     end,
                 },
             })
+            
+
 
             -- Use buffer source for `/` and `?`
             cmp.setup.cmdline({ "/", "?" }, {

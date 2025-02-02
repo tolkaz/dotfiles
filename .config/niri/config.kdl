@@ -2,7 +2,6 @@
 // "/-" comments out the following node.
 // Check the wiki for a full description of the configuration:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Overview
-// fdsf 
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
@@ -44,7 +43,7 @@ input {
 
 
     // Uncomment this to make the mouse warp to the center of newly focused windows.
-     warp-mouse-to-focus
+     //warp-mouse-to-focus
      focus-follows-mouse
     // Focus windows and outputs automatically when moving the mouse into them.
 }
@@ -60,7 +59,7 @@ output "DP-1" {
     mode "3440x1440@143.923"
     scale 1
     transform "normal"
-    variable-refresh-rate on-demand=true
+    variable-refresh-rate
     position x=5760 y=720
 }
 
@@ -75,7 +74,7 @@ output "HDMI-A-1" {
     mode "3840x2160@119.880"
     scale 1
     transform "normal"
-    variable-refresh-rate on-demand=true
+    variable-refresh-rate
     position x=0 y=218
 }
 
@@ -146,7 +145,7 @@ layout {
         //inactive-color "#505050"
 
         active-gradient from="#8e20fc" to="#fc9425" angle=45 in="oklch increasing hue"
-        //inactive-gradient from="#505050" to="#505050" angle=15 in="oklch increasing hue"
+        inactive-gradient from="#292929" to="#292929" angle=15 in="oklch increasing hue"
     }
 
 
@@ -166,13 +165,12 @@ layout {
 
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
-// which may be more convenient to use.
-// spawn-at-startup "alacritty" "-e" "fish"
-//spawn-at-startup "waybar"
-//spawn-at-startup "mako"
-spawn-at-startup "nm-applet"
+// which may be more convenient to use
 spawn-at-startup "xwayland-satellite" "-hidpi"
+spawn-at-startup "blueman-applet"
+spawn-at-startup "nm-applet"
 spawn-at-startup "polkit-gnome-authentication-agent-1"
+
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
 // Additionally, clients will be informed that they are tiled, removing some rounded corner
@@ -189,6 +187,8 @@ environment {
     XDG_CURRENT_DESKTOP "Niri";
     XDG_SESSION_TYPE "wayland";
     XDG_SESSION_DESKTOP "Niri";
+    QT_QPA_PLATFORMTHEME "qt6ct";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
 }
 
 // You can change the path where screenshots are saved.
@@ -273,10 +273,52 @@ window-rule {
 
 window-rule {
     open-floating true
-    match app-id="polkit-gnome-authentication-agent-1" 
-    match app-id="org.pulseaudio.pavucontrol"
-    match app-id="foot" title="nmtui"
+    match app-id="polkit-gnome-authentication-agent-1"  
     match app-id="waypaper"
+    match app-id="steam_app_2052410"
+    match app-id="scrcpy"
+}
+
+window-rule {
+    match app-id="foot" title="nmtui"
+    default-window-height { fixed 700; }
+    default-column-width { fixed 760; }
+    open-floating true
+}
+
+window-rule {
+    match app-id="steam_app_2767030"
+    open-fullscreen true
+    default-window-height { fixed 1440; }
+    default-column-width { fixed 3440; }
+}
+
+window-rule{
+    match app-id="blueman-manager"
+    open-floating true
+    default-window-height { fixed 575; }
+    default-column-width { fixed 600; }
+}
+
+window-rule{
+    match app-id="org.pulseaudio.pavucontrol"
+    open-floating true
+    default-window-height { fixed 575; }
+    default-column-width { fixed 900; }
+}
+
+window-rule{
+    match app-id="mpv"
+    open-floating true
+    default-window-height { fixed 1280; }
+    default-column-width { fixed 2080; }
+}
+
+window-rule {
+    open-floating true
+    match app-id="steam"
+    default-column-width { fixed 2080; }
+    default-window-height { fixed 1720; }
 }
 
 window-rule {
@@ -287,7 +329,6 @@ window-rule {
 
 layer-rule {
     match namespace="^notifications$"
-    match namespace="^bitwarden$"
     block-out-from "screencast"
 }
 
@@ -301,6 +342,9 @@ binds {
     //
     // Most actions that you can bind here can also be invoked programmatically with
     // `niri msg action do-something`.
+
+    XF86AudioNext { spawn "bash" "-c" "strawberry -f"; }
+    XF86AudioPlay { spawn "bash" "-c" "strawberry -t"; }
 
     // Mod-Shift-/, which is usually the same as Mod-?,
     // shows a list of important hotkeys.
@@ -507,7 +551,7 @@ binds {
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
     // Actions to switch layouts.
-    // Note: if you uncomment these, make sure you do NOT have
+    // Note: if you uncomment these, make sure  --force-grab-cursoryou do NOT have
     // a matching layout switch hotkey configured in xkb options above.
     // Having both at once on the same hotkey will break the switching,
     // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
