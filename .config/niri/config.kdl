@@ -20,7 +20,7 @@ input {
      // Next sections include libinput settings.
     // Omitting settings disables them, or leaves them at their default values.
     /-touchpad {
-        tap
+        //tap
         // dwt
         //natural-scroll
         // accel-speed 0.2
@@ -265,8 +265,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="firefox$" title="^Picture-in-Picture$"
-
+    match app-id="LibreWolf" title="^Picture-in-Picture$"
     open-floating true
     default-floating-position x=32 y=32 relative-to="bottom-left"
 }
