@@ -166,10 +166,12 @@ layout {
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use
-spawn-at-startup "xwayland-satellite" "-hidpi"
+spawn-at-startup "xwayland-satellite" ":0"
 spawn-at-startup "blueman-applet"
 spawn-at-startup "nm-applet"
-spawn-at-startup "polkit-gnome-authentication-agent-1"
+spawn-at-startup "systemctl --user start plasma-polkit-agent"
+spawn-at-startup "wl-paste --primary --watch wl-copy"
+spawn-at-startup "fcitx5"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -178,12 +180,12 @@ spawn-at-startup "polkit-gnome-authentication-agent-1"
 prefer-no-csd
 
 environment {
-    DISPLAY ":1";
+    DISPLAY ":0";
     GDK_BACKEND "wayland";
     QT_QPA_PLATFORM "wayland";
     SDL_VIDEODRIVER "x11";
-    GTK_IM_MODULE "fcitx";
     QT_IM_MODULE "fcitx";
+    XMODIFIERS "@im=fcitx";
     XDG_CURRENT_DESKTOP "Niri";
     XDG_SESSION_TYPE "wayland";
     XDG_SESSION_DESKTOP "Niri";

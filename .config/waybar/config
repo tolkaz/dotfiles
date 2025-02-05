@@ -28,34 +28,34 @@
     "disable-click": true,
     "format": "{icon}",
     "format-icons": {
-      "active": " ",
-      "default": " "
+      "active": "",
+      "default": ""
   }
 },
   "network": {
     "format": "{ifname}",
     "format-wifi": " {essid} ({signalStrength}%)",
-    "format-ethernet": "  {ifname}",
+    "format-ethernet": "󰌘  {ifname}",
     "format-disconnected": "Disconnected ⚠",
-    "tooltip-format": " {ifname} via {gwaddri}",
+    "tooltip-format": "󰌘 {ifname} via {gwaddri}",
     "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
-    "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
+    "tooltip-format-ethernet": "󰌘 {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
     "on-click-right": "~/.config/waybar/scripts/nm-applet.sh toggle",
     "on-click": "foot --title nmtui -e nmtui"
   },
   "pulseaudio": {
-    "format": "{icon}  {volume}%",
+    "format": "{icon}   {volume}%",
     "format-bluetooth": "{volume}% {icon} {format_source}",
-    "format-bluetooth-muted": " {icon} {format_source}",
-    "format-muted": " {format_source}",
+    "format-bluetooth-muted": "󰸈 {icon} {format_source}",
+    "format-muted": "󰸈 {format_source}",
     "format-source": "{volume}% ",
     "format-source-muted": "",
     "format-icons": {
       "headphone": " ",
-      "hands-free": " ",
-      "headset": " ",
+      "hands-free": " ",
+      "headset": " ",
       "phone": " ",
       "portable": " ",
       "car": " ",
