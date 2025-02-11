@@ -59,8 +59,8 @@ output "DP-1" {
     mode "3440x1440@143.923"
     scale 1
     transform "normal"
-    variable-refresh-rate
-    position x=5760 y=720
+    variable-refresh-rate on-demand=true
+    position x=5770 y=720
 }
 
 output "DP-2" {
@@ -74,7 +74,7 @@ output "HDMI-A-1" {
     mode "3840x2160@119.880"
     scale 1
     transform "normal"
-    variable-refresh-rate
+    variable-refresh-rate on-demand=true
     position x=0 y=218
 }
 
@@ -83,7 +83,7 @@ output "HDMI-A-1" {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 7
+    gaps 6
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -127,10 +127,11 @@ layout {
     focus-ring {
         off
         width 5
-        //active-color "#7fc8ff"
+        //active-color "blue"
         //inactive-color "#505050"
-        active-gradient from="#8e20fc" to="#fc9425" angle=45 relative-to="workspace-view"
-        inactive-gradient from="#505050" to="#505050" angle=15 relative-to="workspace-view"
+
+        active-gradient from="#8e20fc" to="#fc9425" angle=45 in="oklch increasing hue"
+        inactive-gradient from="#292929" to="#292929" angle=15 in="oklch increasing hue"
     }
 
 
@@ -170,7 +171,8 @@ spawn-at-startup "xwayland-satellite" ":0"
 spawn-at-startup "blueman-applet"
 spawn-at-startup "nm-applet"
 spawn-at-startup "systemctl --user start plasma-polkit-agent"
-spawn-at-startup "wl-paste --primary --watch wl-copy"
+//spawn-at-startup "wl-paste --primary --watch wl-copy"
+spawn-at-startup "wl-paste -p --watch wl-copy -cp "
 spawn-at-startup "fcitx5"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -196,10 +198,10 @@ environment {
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
 // The path is formatted with strftime(3) to give you the screenshot date and time.
-screenshot-path "/media/hisui/Images/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+//screenshot-path "/media/hisui/Images/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 // You can also set this to null to disable saving screenshots to disk.
-// screenshot-path null
+screenshot-path null
 
 // Animation settings.
 // The wiki explains how to configure individual animations:
@@ -260,6 +262,26 @@ animations {
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
 
+/-window-rule {
+    match app-id="steam_app_2767030"
+    open-fullscreen true
+    default-window-height { fixed 1440; }
+    default-column-width { fixed 3440; }
+}
+
+window-rule {
+    match app-id="^steam_app$"
+    variable-refresh-rate true
+}
+
+window-rule {
+    open-floating true
+    match app-id="polkit-gnome-authentication-agent-1"  
+    match app-id="waypaper"
+    match app-id="steam_app_2052410"
+    match app-id="scrcpy"
+}
+
 window-rule {
   draw-border-with-background false
   clip-to-geometry true
@@ -273,25 +295,10 @@ window-rule {
 }
 
 window-rule {
-    open-floating true
-    match app-id="polkit-gnome-authentication-agent-1"  
-    match app-id="waypaper"
-    match app-id="steam_app_2052410"
-    match app-id="scrcpy"
-}
-
-window-rule {
     match app-id="foot" title="nmtui"
     default-window-height { fixed 700; }
     default-column-width { fixed 760; }
     open-floating true
-}
-
-window-rule {
-    match app-id="steam_app_2767030"
-    open-fullscreen true
-    default-window-height { fixed 1440; }
-    default-column-width { fixed 3440; }
 }
 
 window-rule{
@@ -318,8 +325,8 @@ window-rule{
 window-rule {
     open-floating true
     match app-id="steam"
+    default-window-height { fixed 1280; }      
     default-column-width { fixed 2080; }
-    default-window-height { fixed 1720; }
 }
 
 window-rule {
