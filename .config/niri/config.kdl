@@ -145,7 +145,7 @@ layout {
         //active-color "blue"
         //inactive-color "#505050"
 
-        active-gradient from="#8e20fc" to="#fc9425" angle=45 in="oklch increasing hue"
+        active-gradient from="#8e20fc" to="#fc9425" angle=90 in="oklch increasing hue"
         inactive-gradient from="#292929" to="#292929" angle=15 in="oklch increasing hue"
     }
 
@@ -170,9 +170,7 @@ layout {
 spawn-at-startup "xwayland-satellite" ":0"
 spawn-at-startup "blueman-applet"
 spawn-at-startup "nm-applet"
-spawn-at-startup "systemctl --user start plasma-polkit-agent"
-//spawn-at-startup "wl-paste --primary --watch wl-copy"
-spawn-at-startup "wl-paste -p --watch wl-copy -cp "
+spawn-at-startup "wl-paste -p --watch wl-copy -cp"
 spawn-at-startup "fcitx5"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -262,15 +260,18 @@ animations {
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
 
-/-window-rule {
-    match app-id="steam_app_2767030"
+
+window-rule {
     open-fullscreen true
-    default-window-height { fixed 1440; }
-    default-column-width { fixed 3440; }
+    match app-id="steam_app_1659040"
+    match app-id="steam_app_2058180"
+    match app-id="steam_app_2054970"
+    match app-id="steam_app_2767030"
 }
 
 window-rule {
     match app-id="^steam_app$"
+    match is-active=true
     variable-refresh-rate true
 }
 
@@ -286,6 +287,11 @@ window-rule {
   draw-border-with-background false
   clip-to-geometry true
   geometry-corner-radius 5
+}
+
+window-rule {
+    match is-active=false
+    opacity 0.95
 }
 
 window-rule {
@@ -323,13 +329,6 @@ window-rule{
 }
 
 window-rule {
-    open-floating true
-    match app-id="steam"
-    default-window-height { fixed 1280; }      
-    default-column-width { fixed 2080; }
-}
-
-window-rule {
     match app-id="discord"
     match app-id="LibreWolf"
     block-out-from "screencast"
@@ -351,8 +350,11 @@ binds {
     // Most actions that you can bind here can also be invoked programmatically with
     // `niri msg action do-something`.
 
-    XF86AudioNext { spawn "bash" "-c" "strawberry -f"; }
-    XF86AudioPlay { spawn "bash" "-c" "strawberry -t"; }
+    //XF86AudioNext { spawn "bash" "-c" "strawberry -f"; }
+    //XF86AudioPlay { spawn "bash" "-c" "strawberry -t"; }
+    
+    XF86AudioNext { spawn "bash" "-c" "rhythmbox-client --next"; }
+    XF86AudioPlay { spawn "bash" "-c" "rhythmbox-client --play-pause"; }
 
     // Mod-Shift-/, which is usually the same as Mod-?,
     // shows a list of important hotkeys.
