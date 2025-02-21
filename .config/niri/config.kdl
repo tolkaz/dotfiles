@@ -83,7 +83,7 @@ output "HDMI-A-1" {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 6
+    gaps 5
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -141,7 +141,7 @@ layout {
         // If you enable the border, you probably want to disable the focus ring.
         //off
         
-        width 5
+        width 4
         //active-color "blue"
         //inactive-color "#505050"
 
@@ -171,7 +171,7 @@ spawn-at-startup "xwayland-satellite" ":0"
 spawn-at-startup "blueman-applet"
 spawn-at-startup "nm-applet"
 spawn-at-startup "wl-paste -p --watch wl-copy -cp"
-spawn-at-startup "fcitx5"
+//spawn-at-startup "fcitx5"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -277,7 +277,6 @@ window-rule {
 
 window-rule {
     open-floating true
-    match app-id="polkit-gnome-authentication-agent-1"  
     match app-id="waypaper"
     match app-id="steam_app_2052410"
     match app-id="scrcpy"
@@ -286,7 +285,7 @@ window-rule {
 window-rule {
   draw-border-with-background false
   clip-to-geometry true
-  geometry-corner-radius 5
+  geometry-corner-radius 5 5 5 5 
 }
 
 window-rule {
@@ -350,11 +349,13 @@ binds {
     // Most actions that you can bind here can also be invoked programmatically with
     // `niri msg action do-something`.
 
-    //XF86AudioNext { spawn "bash" "-c" "strawberry -f"; }
-    //XF86AudioPlay { spawn "bash" "-c" "strawberry -t"; }
-    
-    XF86AudioNext { spawn "bash" "-c" "rhythmbox-client --next"; }
-    XF86AudioPlay { spawn "bash" "-c" "rhythmbox-client --play-pause"; }
+    XF86AudioNext { spawn "bash" "-c" "deadbeef --next"; }
+    XF86AudioPlay { spawn "bash" "-c" "deadbeef --play-pause"; }
+    Ctrl+Shift+M { spawn "bash" "-c" "deadbeef --volume +5"; }
+    Ctrl+Shift+N { spawn "bash" "-c" "deadbeef --volume -5"; }
+     
+    //XF86AudioNext { spawn "bash" "-c" "fooyin --next"; }
+    //XF86AudioPlay { spawn "bash" "-c" "fooyin --play-pause"; }
 
     // Mod-Shift-/, which is usually the same as Mod-?,
     // shows a list of important hotkeys.
@@ -362,7 +363,6 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T { spawn "foot"; }
-    //Mod+D { spawn "rofi -show drun"; }
     Mod+D { spawn "fuzzel"; }
     Mod+B { spawn "librewolf"; }
     Mod+E { spawn "thunar"; }
